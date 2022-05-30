@@ -1,0 +1,12 @@
+.active {
+  font-weight: bold;
+}
+.pending {
+  font-weight: italic;
+}
+.green {
+  color: green;
+}
+.orange {
+  color: orange
+}
