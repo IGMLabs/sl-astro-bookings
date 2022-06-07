@@ -7,7 +7,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { CommonServiceService } from 'src/app/core/commons/common.service';
+import { CommonService } from 'src/app/core/commons/common.service';
 import { FormMessagesService } from 'src/app/core/forms/form-messages.service';
 import { FormValidationsService } from 'src/app/core/forms/form-validations.service';
 
@@ -42,7 +42,7 @@ export class NewTripForm implements OnInit {
 
 
 
-  constructor(formBuilder: FormBuilder, public fvs: FormValidationsService, public fms: FormMessagesService, public cms: CommonServiceService) {
+  constructor(formBuilder: FormBuilder, public fvs: FormValidationsService, public fms: FormMessagesService, public cms: CommonService) {
     this.form = formBuilder.group({
       agency: new FormControl('', [Validators.required]),
       destination: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(20)] ),
