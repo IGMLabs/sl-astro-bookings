@@ -7,6 +7,9 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { CommonServiceService } from 'src/app/core/commons/common.service';
+import { FormMessagesService } from 'src/app/core/forms/form-messages.service';
+import { FormValidationsService } from 'src/app/core/forms/form-validations.service';
 
 @Component({
   selector: 'app-new-trip-form',
@@ -37,7 +40,9 @@ export class NewTripForm implements OnInit {
     },
   ];
 
-  constructor(formBuilder: FormBuilder) {
+
+
+  constructor(formBuilder: FormBuilder, public fvs: FormValidationsService, public fms: FormMessagesService, public cms: CommonServiceService) {
     this.form = formBuilder.group({
       agency: new FormControl('', [Validators.required]),
       destination: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(20)] ),
@@ -47,7 +52,7 @@ export class NewTripForm implements OnInit {
       flightPrice: new FormControl('', [Validators.required, Validators.min(1000000), Validators.max(10000000)] ),
 
     }, {
-      validators: [this.compareDates]
+      validators: [fvs.compareDates]
     });
   }
 
@@ -85,29 +90,15 @@ export class NewTripForm implements OnInit {
   }
 
   public hasError(controlName: string): boolean {
-    const control = this.getControl(controlName);
-    if (!control) return false;
-    return control.invalid;
+    return this.fms.hasError(this.form, controlName);
   }
 
   public mustShowMessage(controlName: string): boolean {
-    const control = this.getControl(controlName);
-    if (!control) return false;
-    return control.touched && control.invalid;
+    return this.fms.mustShowMessage(this.form, controlName);
   }
 
   public getErrorMessage(controlName: string): string {
-    const control = this.getControl(controlName);
-    if (!control) return '';
-    if (!control.errors) return '';
-    const errors = control.errors;
-    let errorMessage = '';
-    errorMessage += errors['required'] ? '🔥 Field is required ' : ' ';
-    errorMessage += errors['minlength'] ? `🔥 More than ${errors['minlength'].requiredLength} chars`: ' ';
-    errorMessage += errors['maxlength'] ? `🔥 More than ${errors['maxlength'].requiredLength} chars`: ' ';
-    errorMessage += errors['max'] ? `🔥 More than ${errors['max'].max} `: ' ';
-    errorMessage += errors['min'] ? `🔥 Less than ${errors['min'].min} `: ' ';
-    return errorMessage;
+    return this.fms.getErrorMessage(this.form, controlName);
   }
 
   public onSubmitClick(){
@@ -118,11 +109,8 @@ export class NewTripForm implements OnInit {
   }
 
   private getDashId(str: string):string {
-    return str.toLocaleLowerCase().replace(/ /g, '-');
+    return this.cms.getDashId(str);
   }
 
-  private getControl(controlName: string): AbstractControl | null {
-    return this.form.get(controlName);
-  }
   ngOnInit(): void {}
 }

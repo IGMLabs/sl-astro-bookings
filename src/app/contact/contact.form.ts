@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CommonServiceService } from '../core/commons/common.service';
+import { FormMessagesService } from '../core/forms/form-messages.service';
+import { FormValidationsService } from '../core/forms/form-validations.service';
 
 interface Contact {
   name:string,
@@ -16,7 +19,7 @@ export class ContactForm implements OnInit {
 
   public form: FormGroup
 
-  constructor(formBuilder: FormBuilder) {
+  constructor(formBuilder: FormBuilder, public fms: FormMessagesService, public fvs: FormValidationsService, public cms: CommonServiceService) {
     this.form = formBuilder.group({
       name: new FormControl('', [Validators.required, Validators.minLength(2)]),
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -41,30 +44,16 @@ export class ContactForm implements OnInit {
   }
 
   public hasError (controlName: string) : boolean {
-    const control= this.getControl(controlName);
-    if (!control) return false;
-    return control.invalid;
+    return this.fms.hasError(this.form, controlName);
 
   }
   public mustShowMessage (controlName: string) : boolean {
-    const control= this.getControl(controlName);
-    if (!control) return false;
-    return control.touched && control.invalid;
+    return this.fms.mustShowMessage(this.form, controlName);
 
   }
 
   public getErrorMessage (controlName: string) : string {
-      const control= this.getControl(controlName);
-      if (!control) return '';
-      if (!control.errors) return '';
-      const errors = control.errors;
-      let errorMesagge = '';
-      errorMesagge += errors['required'] ? '🔥 Field is required' : '';
-      errorMesagge += errors['email'] ? '🔥 Should be an email address' : '';
-      errorMesagge += errors['maxlength']
-      ? `🔥 Less than ${errors['maxlength'].requiredLength} chars`
-      : '';
-      return errorMesagge;
+    return this.fms.getErrorMessage(this.form, controlName);
     }
 
 
