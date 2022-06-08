@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors,
 import { CommonService } from 'src/app/core/commons/common.service';
 import { FormMessagesService } from 'src/app/core/forms/form-messages.service';
 import { FormValidationsService } from 'src/app/core/forms/form-validations.service';
+import { FormBase } from 'src/app/core/forms/form.base';
 
 
 interface Register {
@@ -16,11 +17,10 @@ interface Register {
   templateUrl: './register.form.html',
   styleUrls: ['./register.form.css']
 })
-export class RegisterForm implements OnInit {
+export class RegisterForm extends FormBase implements OnInit {
 
-  public form: FormGroup
-
-  constructor(formBuilder: FormBuilder, public fms: FormMessagesService, public fvs: FormValidationsService, public cms: CommonService) {
+  constructor(formBuilder: FormBuilder, fms: FormMessagesService, fvs: FormValidationsService) {
+    super(fms);
     this.form = formBuilder.group({
       name: new FormControl('', [Validators.required, Validators.minLength(2)]),
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -58,24 +58,5 @@ export class RegisterForm implements OnInit {
     if (errors['passwordMatch']) return errors['passWordMatch'];
     return '';
   }
-
-  public getControl (controlName: string): AbstractControl | null {
-    return this.form.get(controlName);
-  }
-
-  public hasError (controlName: string) : boolean {
-    return this.fms.hasError(this.form, controlName);
-
-  }
-  public mustShowMessage (controlName: string) : boolean {
-    return this.fms.mustShowMessage(this.form, controlName);
-
-  }
-
-  public getErrorMessage (controlName: string) : string {
-    return this.fms.getErrorMessage(this.form, controlName);
-    }
-
-
 
 }

@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors,
 import { CommonService } from 'src/app/core/commons/common.service';
 import { FormMessagesService } from 'src/app/core/forms/form-messages.service';
 import { FormValidationsService } from 'src/app/core/forms/form-validations.service';
+import { FormBase } from 'src/app/core/forms/form.base';
 
 
 @Component({
@@ -10,32 +11,14 @@ import { FormValidationsService } from 'src/app/core/forms/form-validations.serv
   templateUrl: './login.form.html',
   styleUrls: ['./login.form.css']
 })
-export class LoginForm implements OnInit {
+export class LoginForm extends FormBase  implements OnInit {
 
-  public form: FormGroup;
-
-  constructor(formBuilder: FormBuilder, public fms: FormMessagesService, public fvs: FormValidationsService, public cms: CommonService) {
+  constructor(formBuilder: FormBuilder, fms: FormMessagesService, fvs: FormValidationsService) {
+    super(fms);
     this.form = formBuilder.group({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(10)]),
     });
-  }
-
-
-  public hasError(controlName: string):boolean {
-    return this.fms.hasError(this.form, controlName);
-  }
-
-  public mustShowMessage(controlName: string): boolean {
-    return this.fms.mustShowMessage(this.form, controlName);
-  }
-
-  public getControl(controlName: string): AbstractControl | null {
-    return this.form.get(controlName);
-  }
-
-  public getErrorMessage(controlName: string): string {
-    return this.fms.getErrorMessage(this.form, controlName);
   }
 
   public onSave() {
