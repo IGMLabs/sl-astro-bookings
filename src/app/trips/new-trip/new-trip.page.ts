@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AgenciesApi } from 'src/app/core/api/agencies.api';
+import { Agency } from 'src/app/core/api/agency.interface';
+import { Trip } from 'src/app/core/api/trip.interface';
+import { TripsApi } from 'src/app/core/api/trips.api';
 
 @Component({
   selector: 'app-new-trip',
@@ -7,9 +12,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewTripPage implements OnInit {
 
-  constructor() { }
+  public agencies: Agency[];
+
+  constructor(agenciesApi: AgenciesApi, private tripsApi: TripsApi, private router: Router) {
+    this.agencies = agenciesApi.getAll();
+  }
 
   ngOnInit(): void {
+  }
+
+  onSave(newTripData: Trip){
+    this.tripsApi.post(newTripData);
+    this.router.navigate(['/trips']);
   }
 
 }

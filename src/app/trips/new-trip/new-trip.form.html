@@ -42,8 +42,8 @@
               formControlName="end_date"
               [attr.aria-invalid]="hasError('end_date')">
         <small *ngIf="mustShowMessage('end_date')">{{ getErrorMessage('end_date') }}</small>
-        <small>{{getDatesMessage()}}</small>
       </div>
+      <small>{{ getDatesRangeMessage() }}</small>
       <div>
         <label for="flightPrice"> Flight Price</label>
         <input name="flightPrice"

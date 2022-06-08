@@ -1,17 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  Validators,
-} from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { AgenciesApi } from 'src/app/core/api/agencies.api';
 import { Agency } from 'src/app/core/api/agency.interface';
+import { TripsApi } from 'src/app/core/api/trips.api';
 import { CommonService } from 'src/app/core/commons/common.service';
 import { FormMessagesService } from 'src/app/core/forms/form-messages.service';
 import { FormValidationsService } from 'src/app/core/forms/form-validations.service';
 import { FormBase } from 'src/app/core/forms/form.base';
+import { Trip } from 'src/app/core/api/trip.interface';
 
 @Component({
   selector: 'app-new-trip-form',
@@ -19,32 +15,19 @@ import { FormBase } from 'src/app/core/forms/form.base';
   styleUrls: ['./new-trip.form.css']
 })
 export class NewTripForm extends FormBase implements OnInit {
-  public start_date = 0;
-  public agencies:Agency[] = [
-    {
-      id: 'space-y',
-      name: 'Space Y',
-      range: 'Interplanetary',
-      status: 'Active',
-    },
-    {
-      id: 'green-origin',
-      name: 'Green Origin',
-      range: 'Orbital',
-      status: 'Active',
-    },
-    {
-      id: 'virgin-way',
-      name: 'Virgin Way',
-      range: 'Orbital',
-      status: 'Pending',
-    },
-  ];
+  @Input() public agencies: Agency[] = [];
+  @Output() public save = new EventEmitter<Trip>();
 
-
-
-  constructor(formBuilder: FormBuilder, fvs: FormValidationsService, fms: FormMessagesService, private cms: CommonService) {
+  constructor(
+      formBuilder: FormBuilder,
+      fvs: FormValidationsService,
+      fms: FormMessagesService,
+      private cms: CommonService,
+      agenciesApi: AgenciesApi,
+      private tripsApi: TripsApi
+    ){
     super(fms);
+    this.agencies = agenciesApi.getAll();
     this.form = formBuilder.group({
       agency: new FormControl('', [Validators.required]),
       destination: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(20)] ),
@@ -58,48 +41,19 @@ export class NewTripForm extends FormBase implements OnInit {
     });
   }
 
-  private compareDates(form: AbstractControl) : ValidationErrors | null {
-    const start = form.get('start_date')?.value;
-    const end = form.get('end_date')?.value;
-    if (!start || !end) {
-      return {
-        compareDates: 'No dates provided'
-      };
-    }
-    const start_date = new Date(start);
-    const end_date = new Date(end);
-    const today = new Date();
-
-    if (today > start_date){
-      return {
-        compareDates: "You can't travel to the past"
-      };
-    }
-    if (end_date < start_date){
-      return {
-        compareDates: "Travel to the past it's not posible yet"
-      };
-    }
-
-    return null;
+  public onSubmitClick(){
+    const {agencyId, destination, places, startDate, endDate, flightPrice} = this.form.value;
+    const id = this.cms.getDashId(agencyId + ' ' + destination);
+    const newTripData = {id, agencyId, destination, places, startDate, endDate, flightPrice};
+    console.warn('Send trip data ', newTripData);
+    this.save.emit(newTripData);
   }
 
-  public getDatesMessage() {
+  public getDatesRangeMessage() {
     const errors = this.form.errors;
     if (!errors) return '';
-    if (errors['compareDates']) return errors['compareDates'];
-    return;
-  }
-
-    public onSubmitClick(){
-    const {agency, destination, places, start_date, end_date, flightPrice} = this.form.value;
-    const id = this.getDashId(agency + "-" + destination);
-    const newTripData = {id, agency, destination, places, start_date, end_date, flightPrice};
-    console.warn('Send trip data ', newTripData)
-  }
-
-  private getDashId(str: string):string {
-    return this.cms.getDashId(str);
+    if (errors['datesRange']) return errors['datesRange'];
+    return '';
   }
 
   ngOnInit(): void {}
