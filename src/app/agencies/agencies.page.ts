@@ -11,10 +11,14 @@ export class AgenciesPage implements OnInit {
   public agencies!: Agency[];
 
   constructor(private agenciesApi: AgenciesApi) {
-    this.agencies = agenciesApi.getAll();
+    this.agenciesApi.getAll().subscribe( ( data ) => {
+      this.agencies = data;
+    });
   }
   onReload() {
-    this.agencies = this.agenciesApi.getAll();
+    this.agenciesApi.getAll().subscribe( ( data ) => {
+      this.agencies = data;
+    });
   }
 
   ngOnInit(): void {
