@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Agency } from 'src/app/core/api/agency.interface';
-import { IdNameApi } from 'src/app/core/api/id-name.api';
 import { IdName } from 'src/app/core/api/id-name.interface';
 import { CommonService } from 'src/app/core/commons/common.service';
 import { FormMessagesService } from 'src/app/core/forms/form-messages.service';
@@ -17,14 +16,10 @@ export class NewAgencyForm extends FormBase implements OnInit {
   @Input() public statuses: string[] = [];
   @Output() public save = new EventEmitter<Agency>();
 
-  constructor(
-    formBuilder: FormBuilder,
+  constructor(formBuilder: FormBuilder,
     fms: FormMessagesService,
-    idNameApi: IdNameApi,
     private cms: CommonService) {
     super(fms);
-    this.ranges = idNameApi.getRanges();
-    this.statuses = idNameApi.getStatuses();
 
     this.form = formBuilder.group({
       name: new FormControl('', [Validators.required, Validators.minLength(2)]),
