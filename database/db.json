@@ -19,6 +19,12 @@
       "name": "Virgin Way",
       "range": "Orbital",
       "status": "Pending"
+    },
+    {
+      "id": "susana",
+      "name": "Susana",
+      "range": "Orbital",
+      "status": "Active"
     }
   ],
   "trips": [

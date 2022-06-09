@@ -18,7 +18,7 @@ export class AgenciesApi {
   }
 
   public getById(id: string) {
-    return this.http.get<Agency>('http://localhost:3000/agencies'+id);
+    return this.http.get<Agency>('http://localhost:3000/agencies/'+id);
   }
 
   public post(agency: Agency) {
