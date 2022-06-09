@@ -22,13 +22,11 @@ export class NewTripForm extends FormBase implements OnInit {
       formBuilder: FormBuilder,
       fvs: FormValidationsService,
       fms: FormMessagesService,
-      private cms: CommonService,
-      agenciesApi: AgenciesApi,
-      private tripsApi: TripsApi
+      private cms: CommonService
     ){
     super(fms);
     this.form = formBuilder.group({
-      agency: new FormControl('', [Validators.required]),
+      agencyId: new FormControl('', [Validators.required]),
       destination: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(20)] ),
       places: new FormControl('', [Validators.required, Validators.min(2), Validators.max(10)] ),
       start_date: new FormControl('', [Validators.required] ),

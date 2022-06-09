@@ -14,6 +14,8 @@ export class TripPage implements OnInit {
 
   ngOnInit(): void {
     this.tripId = this.route.snapshot.paramMap.get('id') || '';
-    this.trip = this.tripsApi.getById(this.tripId);
+    this.tripsApi.getById(this.tripId).subscribe((data) => {
+      this.trip = data;
+    });
   }
 }

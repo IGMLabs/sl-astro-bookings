@@ -15,7 +15,7 @@ export class NewTripPage implements OnInit {
   public agencies: Agency[]=[];
 
   constructor(agenciesApi: AgenciesApi, private tripsApi: TripsApi, private router: Router) {
-    agenciesApi.getAll().subscribe((data) => {
+    agenciesApi.getAll$().subscribe((data) => {
       this.agencies = data;
     });
   }
@@ -24,8 +24,9 @@ export class NewTripPage implements OnInit {
   }
 
   onSave(newTripData: Trip){
-    this.tripsApi.post(newTripData);
-    this.router.navigate(['/trips']);
+    this.tripsApi.post(newTripData).subscribe(() => {
+      this.router.navigate(['/trips']);
+    });
   }
 
 }

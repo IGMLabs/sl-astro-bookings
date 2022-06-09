@@ -4,7 +4,7 @@
       <div>
         <label for="agency"> Agency</label>
         <select name="agency"
-                formControlName="agency">
+                formControlName="agencyId">
           <option value="">Select an agency</option>
           <option *ngFor="let agency of agencies"
                   [value]="agency.id">{{ agency.name }}</option>

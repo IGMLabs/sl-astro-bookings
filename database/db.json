@@ -87,6 +87,19 @@
       "status": "Waiting",
       "extraLuggagePricePerKilo": 0,
       "premiumFoodPrice": 1000
+    },
+    {
+      "id": "undefined-marte",
+      "destination": "marte",
+      "places": 4,
+      "flightPrice": 1111111
+    },
+    {
+      "id": "space-y-marte",
+      "agencyId": "space-y",
+      "destination": "marte",
+      "places": 4,
+      "flightPrice": 1111111
     }
   ]
 }
