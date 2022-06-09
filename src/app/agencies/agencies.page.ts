@@ -27,16 +27,7 @@ export class AgenciesPage implements OnInit {
     this.agencies$ = this.agenciesApi.getAll$();
   }
   onReload() {
-    this.agenciesApi.getAll$().subscribe(
-      ( data ) => {
-      //this.agencies = data;
-      },
-      ( err ) => {
-        console.log('Fallo', err.message);
-        this.error = true;
-      }
-
-    );
+    this.agencies$ = this.agenciesApi.getAll$();
   }
 
   ngOnInit(): void {
