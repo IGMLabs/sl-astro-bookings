@@ -12,6 +12,10 @@ export class TripsList implements OnInit {
   @Output() private reload = new EventEmitter();
   public reloading = false;
 
+  constructor(tripsApi: TripsApi) {
+    tripsApi.getAll$().subscribe((trips) => (this.trips = trips));
+  }
+
   public getTripsLength(){
     return this.trips.length;
   }

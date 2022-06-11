@@ -10,17 +10,12 @@
       <small *ngIf="mustShowMessage('name')">{{ getErrorMessage('name') }}</small>
     </div>
     <div>
-      <label for="range"> Operation range </label>
+      <label for="range"> Operation range</label>
       <select name="range"
-              id="range"
-              formControlName="range"
-              [attr.aria-invalid]="hasError('range')">
-        <option selected
-                value="">Select a range</option>
+              formControlName="range">
+        <option value="">Select a range</option>
         <option *ngFor="let range of ranges"
-                [value]="range.id">
-          {{ range.name }}
-        </option>
+                [value]="range.id">{{ range.name }}</option>
       </select>
       <small *ngIf="mustShowMessage('range')">{{ getErrorMessage('range') }}</small>
     </div>

@@ -9,23 +9,14 @@ import { Agency } from '../core/api/agency.interface';
   styleUrls: ['./agencies.page.css']
 })
 export class AgenciesPage implements OnInit {
-  //public agencies!: Agency[];
-  public agencies$!: Observable<Agency[]>;
+  public agencies$: Observable<Agency[]>;
   public error: boolean = false;
 
-  //private subscriptor = {
-  //    next : (data: Agency[]) => {
-  //      //this.agencies = data;
-  //    },
-  //    error: (error:Error) => {
-  //      console.log('Fallo', error.message);
-  //      this.error = true;
-  //    }
-  //};
   constructor(private agenciesApi: AgenciesApi) {
     //this.agenciesApi.getAll$().subscribe(this.subscriptor);
     this.agencies$ = this.agenciesApi.getAll$();
   }
+  
   onReload() {
     this.agencies$ = this.agenciesApi.getAll$();
   }

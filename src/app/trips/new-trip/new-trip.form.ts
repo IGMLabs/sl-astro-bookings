@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { AgenciesApi } from 'src/app/core/api/agencies.api';
 import { Agency } from 'src/app/core/api/agency.interface';
-import { TripsApi } from 'src/app/core/api/trips.api';
 import { CommonService } from 'src/app/core/commons/common.service';
 import { FormMessagesService } from 'src/app/core/forms/form-messages.service';
 import { FormValidationsService } from 'src/app/core/forms/form-validations.service';
@@ -16,7 +14,7 @@ import { Trip } from 'src/app/core/api/trip.interface';
 })
 export class NewTripForm extends FormBase implements OnInit {
   @Input() public agencies: Agency[] = [];
-  @Output() public save = new EventEmitter<Trip>();
+  @Output() public save = new EventEmitter<Partial<Trip>>();
 
   constructor(
       formBuilder: FormBuilder,

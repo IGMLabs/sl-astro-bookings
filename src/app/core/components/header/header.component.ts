@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StatusStore } from '../../api/status.store';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  public isWorking = false;
+  public hasError = false;
+
+  constructor(statusStore: StatusStore) {
+    statusStore.getState$().subscribe((status) => {
+      this.isWorking = status.isWorking;
+      this.hasError = status.errorMessage !== '';
+    });
+  }
 
   ngOnInit(): void {
   }
