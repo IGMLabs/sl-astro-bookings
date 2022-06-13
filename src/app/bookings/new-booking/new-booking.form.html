@@ -1,0 +1,51 @@
+<form [formGroup]="form">
+  <div>
+    <fieldset>
+      <div>
+        <label for="tripId"> Trip</label>
+        <select name="tripId"
+                formControlName="tripId">
+          <option value="">Select a trip</option>
+          <option *ngFor="let trip of trips"
+                  [value]="trip.id">{{ trip.destination }}</option>
+        </select>
+        <small *ngIf="mustShowMessage('trip')">{{ getErrorMessage('trip') }}</small>
+      </div>
+      <div>
+        <label for="passengerName"> Name</label>
+        <input name="passengerName"
+              type="text"
+              formControlName="passengerName"
+              [attr.aria-invalid]="hasError('passengerName')">
+        <small *ngIf="mustShowMessage('passengerName')">{{ getErrorMessage('passengerName') }}</small>
+      </div>
+      <div>
+        <label for="date">Date</label>
+        <input name="date"
+              type="date"
+              formControlName="date"
+              [attr.aria-invalid]="hasError('date')">
+        <small *ngIf="mustShowMessage('date')">{{ getErrorMessage('date') }}</small>
+      </div>
+      <div>
+        <label for="luggageKilos">Luggage Kilos</label>
+        <input name="luggageKilos"
+              type="number"
+              formControlName="luggageKilos"
+              [attr.aria-invalid]="hasError('luggageKilos')">
+        <small *ngIf="mustShowMessage('luggageKilos')">{{ getErrorMessage('luggageKilos') }}</small>
+      </div>
+      <div>
+        <label for="hasPremiumFoodPrice"> Has Premium Food </label>
+        <input name="hasPremiumFoodPrice"
+           type="checkbox"
+           formControlName="hasPremiumFoodPrice"
+           [attr.aria-invalid]="hasError('hasPremiumFoodPrice')">
+        <small *ngIf="mustShowMessage('hasPremiumFoodPrice')">{{ getErrorMessage('hasPremiumFoodPrice') }}</small>
+      </div>
+    </fieldset>
+  </div>
+  <button [disabled]="form.invalid"
+          (click)="onSubmitClick()">Save</button>
+</form>
+

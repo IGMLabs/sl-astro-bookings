@@ -8,3 +8,5 @@
 </ng-template>
 
 <app-trips-list *ngIf="(trips$ | async) as trips"[trips]="trips"></app-trips-list>
+
+<app-bookings-list *ngIf="(bookings$ | async) as bookings"[bookings]="bookings"></app-bookings-list>

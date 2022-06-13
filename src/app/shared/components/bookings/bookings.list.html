@@ -1,0 +1,16 @@
+<article>
+  <h3> We have {{ getBookingsLength() }} bookings </h3>
+  <ul>
+    <li *ngFor="let booking of bookings">
+      <a [routerLink]="['/','bookings','booking',booking.id ]"
+        >{{ booking.id }}</a>
+        <p>{{booking.passengerName}}</p>
+      <ng-container *ngIf="booking.hasPremiumFoodPrice then premium; else none">
+      </ng-container>
+      <ng-template #premium> 🍕 </ng-template>
+      <ng-template #none> ⭕ </ng-template>
+    </li>
+  </ul>
+  <button (click)="onReloadClick('bookings')"> ♻️ </button>
+</article>
+<app-reloading *ngIf="reloading"></app-reloading>

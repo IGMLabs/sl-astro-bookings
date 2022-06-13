@@ -1,6 +1,15 @@
 {
   "users": [],
-  "bookings": [],
+  "bookings": [
+    {
+      "id": "space-y-moon-1-0.9629848295771684",
+      "tripId": "space-y-moon-1",
+      "passengerName": "Susana López",
+      "date": "2023-01-05",
+      "luggageKilos": 75,
+      "hasPremiumFoodPrice": true
+    }
+  ],
   "agencies": [
     {
       "id": "space-y",
