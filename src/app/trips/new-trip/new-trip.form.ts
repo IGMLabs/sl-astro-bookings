@@ -27,8 +27,8 @@ export class NewTripForm extends FormBase implements OnInit {
       agencyId: new FormControl('', [Validators.required]),
       destination: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(20)] ),
       places: new FormControl('', [Validators.required, Validators.min(2), Validators.max(10)] ),
-      start_date: new FormControl('', [Validators.required] ),
-      end_date: new FormControl('', [Validators.required] ),
+      startDate: new FormControl('', [Validators.required] ),
+      endDate: new FormControl('', [Validators.required] ),
       flightPrice: new FormControl('', [Validators.required, Validators.min(1000000), Validators.max(10000000)] ),
 
     }, {

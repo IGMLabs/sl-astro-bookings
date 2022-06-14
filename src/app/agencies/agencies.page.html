@@ -1,5 +1,9 @@
 <a routerLink="agency/new">➕ Add a new Agency</a>
 
+<br>
+
+<app-search></app-search>
+
 <app-agencies-list  *ngIf="(agencies$ | async) as agencies; else waiting;"
                     [agencies]="agencies"
                     (reload)="onReload()"></app-agencies-list>

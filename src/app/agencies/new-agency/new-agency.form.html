@@ -1,41 +1,35 @@
 <form [formGroup]="form">
   <fieldset>
-    <div>
-      <label for="name"> Agency name </label>
-      <input name="name"
-             id="name"
-             type="text"
-             formControlName="name"
-             [attr.aria-invalid]="hasError('name')">
-      <small *ngIf="mustShowMessage('name')">{{ getErrorMessage('name') }}</small>
-    </div>
+    <app-template-control
+      [form]="form"
+      formControlName="name"
+      label="Name"
+      placeholder="Your name"
+    >
+    </app-template-control>
     <div>
       <label for="range"> Operation range</label>
-      <select name="range"
-              formControlName="range">
+      <select name="range" formControlName="range">
         <option value="">Select a range</option>
-        <option *ngFor="let range of ranges"
-                [value]="range.id">{{ range.name }}</option>
+        <option *ngFor="let range of ranges" [value]="range.id">
+          {{ range.name }}
+        </option>
       </select>
-      <small *ngIf="mustShowMessage('range')">{{ getErrorMessage('range') }}</small>
+      <small *ngIf="mustShowMessage('range')"
+        >{{ getErrorMessage('range') }}</small
+      >
     </div>
-    <div>
-      <label for="status"> Operative status </label>
-      <ng-container *ngFor="let status of statuses">
-        <label for="status-{{status}}">
-          <input name="status"
-                 type="radio"
-                 id="status-{{status}}"
-                 formControlName="status"
-                 [value]="status">
-          {{ status }}
-        </label>
-      </ng-container>
-    </div>
+    <app-template-control *ngFor="let status of statuses"
+                            [form]="form"
+                            formControlName="status"
+                            inputType="radio"
+                            [label]="status"
+                            placeholder="">
+      </app-template-control>
   </fieldset>
   <div>
-    <button type="submit"
-            (click)="onSubmitClick()"
-            [disabled]="form.invalid"> Send new agency data </button>
+    <button type="submit" (click)="onSubmitClick()" [disabled]="form.invalid">
+      Send new agency data
+    </button>
   </div>
 </form>

@@ -25,23 +25,23 @@ export class FormValidationsService {
   }
 
   public compareDates(form: AbstractControl) : ValidationErrors | null {
-    const start = form.get('start_date')?.value;
-    const end = form.get('end_date')?.value;
+    const start = form.get('startDate')?.value;
+    const end = form.get('endDate')?.value;
     if (!start || !end) {
       return {
         compareDates: 'No dates provided'
       };
     }
-    const start_date = new Date(start);
-    const end_date = new Date(end);
+    const startDate = new Date(start);
+    const endDate = new Date(end);
     const today = new Date();
 
-    if (today > start_date){
+    if (today > startDate){
       return {
         compareDates: "You can't travel to the past"
       };
     }
-    if (end_date < start_date){
+    if (endDate < startDate){
       return {
         compareDates: "Travel to the past it's not posible yet"
       };
