@@ -26,17 +26,17 @@ export class AgenciesPage implements OnInit {
       //exhaustMap((searchTerm) => this.agenciesApi.getByText$(searchTerm))
 
     );
-    route.queryParamMap.subscribe(queryParamMap =>{
-      const agencyId = queryParamMap.get('q');
-      this.trips$ = this.tripsApi.getByText$(agencyId);
-    });
+    // route.queryParamMap.subscribe(queryParamMap =>{
+    //   const agencyId = queryParamMap.get('q');
+    //   this.trips$ = this.tripsApi.getByText$(agencyId);
+    // });
 
-    // this.trips$ = this.route.queryParamMap.pipe(
-    //   map((qpm) => qpm.get('q')),
-    //   switchMap((agencyId) =>
-    //     this.trips$ = this.tripsApi.getByText$(agencyId)
-    //   )
-    // )
+    this.trips$ = this.route.queryParamMap.pipe(
+      map((qpm) => qpm.get('q')),
+      switchMap((agencyId) =>
+        this.tripsApi.getByText$(agencyId)
+      )
+    )
 
   }
 
