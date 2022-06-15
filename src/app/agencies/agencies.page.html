@@ -8,6 +8,8 @@
                     [agencies]="agencies"
                     (reload)="onReload()"></app-agencies-list>
 
+ <app-trips-list *ngIf="(trips$ | async) as trips" [trips]="trips"></app-trips-list>
+
 <ng-template #waiting>
   <h4>Waiting.....</h4>
 </ng-template>

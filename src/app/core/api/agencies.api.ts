@@ -16,9 +16,4 @@ export class AgenciesApi extends CrudApi<Agency> {
     super(http, 'agencies', statusStore);
   }
 
-  public getByText$(text: string | null): Observable<Agency[]> {
-    if (text === null) return this.getAll$();
-    return this.http.get<Agency[]>(this.url + '?q=' + text); // .pipe(delay(3000));
-  }
-
 }

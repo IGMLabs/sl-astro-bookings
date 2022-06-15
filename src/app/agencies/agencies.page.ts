@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { catchError, map, Observable, Subject, switchMap, concatMap, exhaustMap,  } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject, Observable, Subject, switchMap, map } from 'rxjs';
 import { AgenciesApi } from '../core/api/agencies.api';
 import { Agency } from '../core/api/agency.interface';
+import { Trip } from '../core/api/trip.interface';
+import { TripsApi } from '../core/api/trips.api';
 
 @Component({
   selector: 'app-agencies',
@@ -10,15 +13,11 @@ import { Agency } from '../core/api/agency.interface';
 })
 export class AgenciesPage implements OnInit {
   public agencies$: Observable<Agency[]>;
-  private search$: Subject<string> = new Subject();
+  public trips$!: Observable<Trip[]>;
+  private search$: BehaviorSubject<string> = new BehaviorSubject('');
   public error: boolean = false;
 
-  constructor(private agenciesApi: AgenciesApi) {
-    this.agencies$ = this.agenciesApi.getAll$();
-
-    this.search$.subscribe(
-      searchTerm => (this.agencies$ = this.agenciesApi.getByText$(searchTerm))
-    );
+  constructor(private agenciesApi: AgenciesApi, private route: ActivatedRoute, private tripsApi: TripsApi) {
 
     this.agencies$ = this.search$.pipe (
       //map((searchTerm) => this.agenciesApi.getByText$(searchTerm))
@@ -27,16 +26,26 @@ export class AgenciesPage implements OnInit {
       //exhaustMap((searchTerm) => this.agenciesApi.getByText$(searchTerm))
 
     );
+    route.queryParamMap.subscribe(queryParamMap =>{
+      const agencyId = queryParamMap.get('q');
+      this.trips$ = this.tripsApi.getByText$(agencyId);
+    });
+
+    // this.trips$ = this.route.queryParamMap.pipe(
+    //   map((qpm) => qpm.get('q')),
+    //   switchMap((agencyId) =>
+    //     this.trips$ = this.tripsApi.getByText$(agencyId)
+    //   )
+    // )
 
   }
 
   onReload() {
-    this.agencies$ = this.agenciesApi.getAll$();
+    this.search$.next('');
   }
 
   onSearch(searchTerm: string) {
     this.search$.next(searchTerm);
-    // this.agencies$ = this.agenciesApi.getByText$(searchTerm);
   }
 
   ngOnInit(): void {
