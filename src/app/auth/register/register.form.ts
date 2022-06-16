@@ -30,7 +30,7 @@ export class RegisterForm extends FormBase implements OnInit {
         Validators.minLength(4),
         Validators.maxLength(10),
       ]),
-      acceptTerms: new FormControl(false, [Validators.requiredTrue]),
+      acceptTerms: new FormControl(false),
     },
     {
       validators: [fvs.passwordMatch]

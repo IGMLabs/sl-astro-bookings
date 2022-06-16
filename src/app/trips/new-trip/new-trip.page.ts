@@ -23,7 +23,7 @@ export class NewTripPage implements OnInit {
 
   onSave(newTripData: Partial<Trip>) {
     this.tripsApi.post$(newTripData).subscribe();
-    this.router.navigate(['/trips']);
+    // this.router.navigate(['/trips']);
   }
 
 }

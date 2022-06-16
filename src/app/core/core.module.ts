@@ -5,7 +5,9 @@ import { FooterComponent } from './components/footer/footer.component';
 import { TitleComponent } from './components/title/title.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ErrorInterceptor } from './api/error.interceptor';
+import { AuthInterceptor } from '../auth/api/auth.interceptor';
 
 
 
@@ -24,6 +26,10 @@ import { HttpClientModule } from '@angular/common/http';
   exports: [
     HeaderComponent,
     FooterComponent
-  ]
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
 })
 export class CoreModule { }

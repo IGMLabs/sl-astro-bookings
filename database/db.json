@@ -1,5 +1,12 @@
 {
-  "users": [],
+  "users": [
+    {
+      "email": "susana.lopez@alumnos.uvigo.es",
+      "password": "$2a$10$xqvf4jRDVAATkp6N4KazJezV8U/eS5Ge8TlEigJcRll3FmlKDZTo.",
+      "name": "Susana",
+      "id": 1
+    }
+  ],
   "bookings": [
     {
       "id": "space-y-moon-1-0.9629848295771684",
@@ -47,6 +54,12 @@
       "id": "chantanasa",
       "name": "Chantanasa",
       "range": "Orbital",
+      "status": null
+    },
+    {
+      "id": "jashiajsdiaj",
+      "name": "jashiajsdiaj",
+      "range": "Interplanetary",
       "status": null
     }
   ],

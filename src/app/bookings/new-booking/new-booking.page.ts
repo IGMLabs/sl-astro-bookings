@@ -25,7 +25,7 @@ export class NewBookingPage implements OnInit {
 
   onSave(newBookingData: Partial<Booking>){
     this.bookingApi.post$(newBookingData).subscribe( () => {
-      this.router.navigate(['/bookings']);
+      // this.router.navigate(['/bookings']);
     });
 
   }
