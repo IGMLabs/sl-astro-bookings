@@ -1,16 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { CommonService } from 'src/app/core/commons/common.service';
 import { FormMessagesService } from 'src/app/core/forms/form-messages.service';
 import { FormValidationsService } from 'src/app/core/forms/form-validations.service';
 import { FormBase } from 'src/app/core/forms/form.base';
+import { Register } from '../api/register.interface';
 
-
-interface Register {
-  name:string,
-  email:string,
-  message: string;
-}
 
 @Component({
   selector: 'app-register-form',
@@ -18,6 +13,7 @@ interface Register {
   styleUrls: ['./register.form.css']
 })
 export class RegisterForm extends FormBase implements OnInit {
+  @Output() register = new EventEmitter<Register>();
 
   constructor(formBuilder: FormBuilder, fms: FormMessagesService, fvs: FormValidationsService) {
     super(fms);
@@ -49,8 +45,9 @@ export class RegisterForm extends FormBase implements OnInit {
 
   public onSave() {
     const {name, email, password} = this.form.value;
-    const register = {name, email, password}
-    console.warn('Send Regsiter', register);
+    const register: Register = { name, email: email.email, password };
+    console.warn('Send register', register);
+    this.register.emit(register);
   }
 
   public getPasswordMessage() {
